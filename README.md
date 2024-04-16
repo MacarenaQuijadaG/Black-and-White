@@ -39,7 +39,7 @@ Instrucciones y ejemplos para ejecutar el conjunto de pruebas.
 
 ## Despliegue 📦
 
-Se desplega a travez de una extencion de Visual Code thunder Client para corroborar la url y la consola del servidor la lista de usuarios con el paquete chalk.
+Se desplega a travez de una extencion de Visual Code thunder Client para corroborar la url.
 
 ## Construido Con 🛠️
 
