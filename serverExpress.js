@@ -1,48 +1,47 @@
 const express = require('express');
 const jimp = require('jimp');
-const { v4: uuidv4 } = require('uuid');
-const path = require('path');
+const { v4: uuidv4 } = require('uuid'); // Importa la función uuidv4 de la biblioteca uuid
+const path = require('path'); // Importa el módulo path para manejar rutas de archivos
 
 const app = express();
 const PORT = 3000;
-//PUERTO DE SALIDA
+
 app.listen(PORT, () => {
-    console.log(`Servidor http://localhost:${PORT}`);
+    console.log(`Servidor http://localhost:${PORT}`); // Imprime el puerto en el que el servidor está corriendo
 });
 
-app.use(express.urlencoded({ extended: true }));
-//app.use(express.static(path.join(__dirname, 'public'))); FUE LLAMADA ASSETS
-app.use(express.static(path.join(__dirname, 'assets')));
+app.use(express.urlencoded({ extended: true })); // Middleware para analizar cuerpos de solicitud codificados en url
+app.use(express.static(path.join(__dirname, 'assets'))); // Middleware para servir archivos estáticos desde la carpeta 'assets'
 
-
-//RUTA POR HTML INICIAL
+// Ruta para la página inicial que contiene el formulario para cargar la imagen
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, 'index.html')); // Envía el archivo index.html al cliente
 });
-//RUTA AL CARGAR IMG
-//app.get('/cargar', async (req, res) => {
+
+// Ruta para procesar la imagen enviada desde el formulario
 app.post('/cargar', async (req, res) => {
     try {
-        const imageUrl = req.body.imageUrl;
+        const imageUrl = req.body.imageUrl; // Obtiene la URL de la imagen desde el cuerpo de la solicitud
         if (!imageUrl) {
-            return res.status(400).send('Debes ingresar una URL valida.');
+            return res.status(400).send('Debes ingresar una URL válida.'); // Verifica si se proporcionó una URL válida
         }
 
-        const image = await jimp.read(imageUrl);
-        // PASA LA IMAGEN A ESCALA DE GRISES CON UN TAMAÑO DE 350 PX
-        image.grayscale().resize(350, jimp.AUTO);
+        const image = await jimp.read(imageUrl); // Lee la imagen desde la URL
+        image.grayscale().resize(350, jimp.AUTO); // Convierte la imagen a escala de grises y la redimensiona
 
-        // GUARDA LA IMAGEN QUE FUE CONVERTIDA
-        const outputFileName = `${uuidv4()}.jpeg`; 
+        const outputFileName = `${uuidv4().slice(0, 8)}.jpg`; // Genera un nombre de archivo único con los primeros 8 caracteres del UUID para la imagen procesada
+        const outputPath = path.join(__dirname, 'assets', 'img', outputFileName); // Ruta de salida para guardar la imagen procesada
 
-        await image.writeAsync(path.join(__dirname, outputFileName));
-        res.sendFile(path.join(__dirname, outputFileName));
-        // EN CASO DE ERRORESS
+        await image.writeAsync(outputPath); // Guarda la imagen procesada en la carpeta 'assets/img'
+
+        // Envía la imagen procesada al cliente
+        res.sendFile(outputPath);
     } catch (error) {
-        console.error('Error al procesar la imagen:', error);
-        res.status(500).send('Ocurrió un error al procesar la imagen.');
+        console.error('Error al procesar la imagen:', error); // Maneja errores durante el procesamiento de la imagen
+        res.status(500).send('Ocurrió un error al procesar la imagen.'); // Envía un mensaje de error al cliente
     }
 });
+
 
 //URL PARA PROBAR
 // https://www.paisajesbonitos.org/wp-content/uploads/2019/03/paisajes-bonitos-flores-girasol.jpg
