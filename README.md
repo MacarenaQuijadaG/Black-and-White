@@ -45,7 +45,7 @@ Se desplega a travez de una extencion de Visual Code thunder Client para corrobo
 
 Explica qué tecnologías usaste para construir este proyecto. Aquí algunos ejemplos:
 
-- [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)) - El lenguaje utilizado
+- [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) - El lenguaje utilizado
 - [Express](https://expressjs.com/en/5x/api.html)- El framework web utilizado
 - [Nodemon](https://www.npmjs.com/package/nodemon)- Servidor
 
