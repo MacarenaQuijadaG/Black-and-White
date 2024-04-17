@@ -1,48 +1,18 @@
 const form = document.getElementsByTagName("form")[0];
-
-// form.addEventListener("submit", function (event) {
-//     console.log("test");
-//     event.preventDefault();
-// } );
-
-let input = document.getElementById("imageUrl");
-let inputError = document.querySelector("imageUrl + span.error");
-console.log(inputError);
-
-
-input.addEventListener('on', function (event) {
-
-    if (input.validity.valid) {
-        // En caso de que haya un mensaje de error visible, si el campo
-        // es válido, eliminamos el mensaje de error.
-        inputError.innerHTML = ""; // Restablece el contenido del mensaje
-        inputError.className = "error"; // Restablece el estado visual del mensaje
-      } else {
-        // Si todavía hay un error, muestra el error exacto
-        showError();
-        e.preventDefault();
-      }
-
-});
-
 form.addEventListener("submit", function (event) {
+   
+    
+      const imageUrl = document.getElementById('imageUrl').value.trim().toString();
+      console.log(imageUrl)
 
-    if (!input.validity.valid) {
-        // Si no es así, mostramos un mensaje de error apropiado
-        showError();
-        // Luego evitamos que se envíe el formulario cancelando el evento
-        event.preventDefault();
+      // Verifica si la URL de la imagen en formato .jpg y .jpg
+      if (!imageUrl.endsWith('.png')  &&  !imageUrl.endsWith('.jpg')) {
+          manejoError();
       }
-
-});
-
-
-function showError() {
-    if (input.validity.valueMissing) {
-        inputError.textContent =
-        "Debe introducir una url de alguna imagen.";
-    }
-    inputError.className = "error activo";
-};
-
-
+      function manejoError(){
+        const errorSpan = document.querySelector('.error');
+          errorSpan.textContent = 'Debe ingresar una URL que contenga la extensión .png o .jpg';
+          errorSpan.style.color = 'red';
+          event.preventDefault(); // Evita que el formulario se envíe
+      }
+} );

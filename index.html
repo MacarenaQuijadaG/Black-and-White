@@ -11,9 +11,9 @@
     
 <body>
     <h2>Black and White Spa</h2>
-    <form action="/cargar" method="post">
+    <form action="/cargar">
         <label for="imageUrl">Ingrese URL de la imagen:</label>
-        <input type="text" id="imageUrl" name="imageUrl">
+        <input type="text" id="imageUrl" required name="imageUrl">
         <span class="error" aria-live="polite"></span>
         <input type="submit" value="Subir imagen al servidor">
     </form>
