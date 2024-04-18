@@ -11,11 +11,9 @@ app.listen(PORT, () => {
 });
 
 
-app.use(express.urlencoded({ extended: true }));
+//app.use(express.urlencoded({ extended: true }));
 //app.use(express.static(path.join(__dirname, 'public'))); FUE LLAMADA ASSETS
 app.use(express.static(path.join(__dirname, 'assets')));
-
-
 
 // Ruta para la página inicial que contiene el formulario para cargar la imagen
 
@@ -30,7 +28,7 @@ app.get('/cargar', async (req, res) => {
         const imageUrl = req.query.imageUrl; // Obtiene la URL de la imagen desde el cuerpo de la solicitud
         
         if (!imageUrl) {
-            return res.status(400).send('Debes ingresar una URL válida.'); // Verifica si se proporcionó una URL válida
+            return res.status(400).send('Debes ingresar una URL o un archivo válida.'); // Verifica si se proporcionó una URL válida
         }
 
         const image = await jimp.read(imageUrl); // Lee la imagen desde la URL
